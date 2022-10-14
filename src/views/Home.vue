@@ -3,6 +3,7 @@
     <Nav />
     <!-- TODO: Carousel 추가 -->
     <MyRecipe />
+    <SharedRecipe />
   </div>
 </template>
 
@@ -10,12 +11,14 @@
 // @ is an alias to /src
 import Nav from '@/components/Nav.vue'
 import MyRecipe from '../components/MyRecipe.vue'
+import SharedRecipe from '../components/SharedRecipe.vue'
 
 export default {
   name: 'Home',
   components: {
     Nav,
-    MyRecipe
+    MyRecipe,
+    SharedRecipe
   },
   data () {
     return {

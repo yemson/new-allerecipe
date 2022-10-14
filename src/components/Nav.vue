@@ -56,6 +56,7 @@ export default {
       auth.signOut()
         .then(() => {
           this.user = null
+          this.$router.push('/').catch(() => {})
         })
     }
   }

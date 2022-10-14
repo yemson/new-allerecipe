@@ -10,11 +10,6 @@ import { getFirestore } from 'firebase/firestore'
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
-
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
@@ -32,3 +27,8 @@ const auth = getAuth()
 const db = getFirestore()
 
 export { auth, db }
+
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount('#app')

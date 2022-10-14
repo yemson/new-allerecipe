@@ -7,10 +7,25 @@
     <!-- NOTE: 일단 카드 반응형인데 width 부분 auto로 하면 크기가 들쭉 날쭉 함 -->
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 text-start">
       <div class="col mb-4">
-        <router-link
-          to="/create-recipe"
-          style="text-decoration: none; color: inherit"
-        >
+        <!-- TODO: 로그인 아닐 시도 처리해야 함 -->
+        <div v-if="user != null">
+          <router-link
+            to="/create-recipe"
+            style="text-decoration: none; color: inherit"
+          >
+            <div
+              class="card shadow-sm"
+              style="width: auto; height: 26rem;"
+            >
+              <div class="card-body d-flex">
+                <p class="card-text text-center align-self-center fw-bold fs-5">
+                  나만의 레시피를 만들어보세요!
+                </p>
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div v-else-if="user == null">
           <div
             class="card shadow-sm"
             style="width: auto; height: 26rem;"
@@ -21,7 +36,7 @@
               </p>
             </div>
           </div>
-        </router-link>
+        </div>
       </div>
       <div
         v-for="(recipe, index) in recipes"

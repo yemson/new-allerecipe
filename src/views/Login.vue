@@ -101,7 +101,7 @@ export default {
         })
         .then(() => {
           console.log('Success Login')
-          this.$router.push('/')
+          this.$router.push('/').catch(() => {})
         })
         .catch((error) => {
           // this.errorLogin = true
@@ -112,7 +112,7 @@ export default {
     checkLoginInfo () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          this.$router.push('/')
+          this.$router.push('/').catch(() => {})
         }
       })
     }
