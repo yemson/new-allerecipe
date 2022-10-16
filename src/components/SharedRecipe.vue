@@ -10,29 +10,33 @@
         v-for="(recipe, index) in recipes"
         :key="index"
       >
-        <!-- TODO: router-link 씌우고 레시피 디테일 페이지 연결해야 함 -->
         <div class="col mb-4">
-          <div
-            class="card shadow-sm"
-            style="width: auto; height: 26rem;"
+          <router-link
+            :to="`/recipe-detail/${recipe.id}`"
+            style="text-decoration: none; color: inherit"
           >
-            <img
-              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-              class="card-img-top"
-              height="200"
+            <div
+              class="card shadow-sm"
+              style="width: auto; height: 26rem;"
             >
-            <div class="card-body">
-              <h5 class="card-title">
-                {{ recipe.recipeName }}
-              </h5>
-              <p class="card-text">
-                {{ recipe.recipeDesc }}
-              </p>
+              <img
+                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                class="card-img-top"
+                height="200"
+              >
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{ recipe.recipeName }}
+                </h5>
+                <p class="card-text">
+                  {{ recipe.recipeDesc }}
+                </p>
+              </div>
+              <div class="card-footer text-muted fs-6">
+                {{ recipe.uid }}
+              </div>
             </div>
-            <div class="card-footer text-muted fs-6">
-              {{ recipe.uid }}
-            </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
