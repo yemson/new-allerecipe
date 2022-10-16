@@ -20,7 +20,7 @@
               style="width: auto; height: 26rem;"
             >
               <img
-                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                :src="recipe.recipeImage"
                 class="card-img-top"
                 height="200"
               >

@@ -44,6 +44,14 @@
           >
           <label for="floatingInput">레시피 설명</label>
         </div>
+        <div class="mb-3">
+          <input
+            id="formFile"
+            class="form-control"
+            type="file"
+            @change="onFileChange"
+          >
+        </div>
       </div>
       <div
         v-for="(step, index) in recipeInfo"
@@ -84,7 +92,8 @@ import axios from 'axios'
 import { debounce } from 'debounce'
 import { addDoc, collection } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth, db } from '@/main'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { auth, db, storage } from '@/main'
 
 export default {
   name: 'CreateRecipe',
@@ -99,7 +108,8 @@ export default {
       allergic: [],
       userUID: '',
       recipeDescription: '',
-      recipeName: ''
+      recipeName: '',
+      recipeImage: null
     }
   },
   watch: {
@@ -165,7 +175,8 @@ export default {
         recipeName: this.recipeName,
         recipeInfo: this.recipeInfo,
         recipeDescription: this.recipeDescription,
-        recipeLikes: []
+        recipeLikes: [],
+        recipeImage: this.recipeImage
       })
       console.log('Document written with ID: ', docRef.id)
       this.$router.push('/')
@@ -176,6 +187,20 @@ export default {
           this.userUID = user.uid
         }
       })
+    },
+    onFileChange (e) {
+      const file = e.target.files[0]
+      const imageRef = ref(storage, 'image/' + file.name)
+      uploadBytesResumable(imageRef, file)
+        .then((snapshot) => {
+          console.log('Uploaded', snapshot.totalBytes, 'bytes.')
+          getDownloadURL(snapshot.ref).then((url) => {
+            console.log('File available at', url)
+            this.recipeImage = url
+          })
+        }).catch((error) => {
+          console.error('Upload failed', error)
+        })
     }
   }
 }
