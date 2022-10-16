@@ -4,7 +4,12 @@
       class="navbar nav-dark bg-success"
     >
       <div class="container">
-        <a class="navbar-brand fs-4 text-light">Allerecipe</a>
+        <router-link
+          to="/"
+          class="navbar-brand fs-4 text-light"
+        >
+          Allerecipe
+        </router-link>
         <form
           class="d-flex"
         >

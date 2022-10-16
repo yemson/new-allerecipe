@@ -29,7 +29,7 @@
                   {{ recipe.recipeName }}
                 </h5>
                 <p class="card-text">
-                  {{ recipe.recipeDesc }}
+                  {{ recipe.recipeDescription }}
                 </p>
               </div>
               <div class="card-footer text-muted fs-6">

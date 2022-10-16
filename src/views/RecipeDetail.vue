@@ -6,6 +6,9 @@
         <div class="col-6 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
         </div>
+        <div class="text-start text-muted">
+          {{ recipeDetail.recipeDescription }}
+        </div>
         <!-- TODO: 작성자 이름 크기 반응형 필요 -->
         <!-- <div class="col-6 text-end align-self-end">
           작성자: {{ recipeDetail.uid }}

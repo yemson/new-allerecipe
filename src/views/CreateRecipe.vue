@@ -21,10 +21,56 @@
           :key="index"
         >
           <button
-            type="button"
             class="list-group-item list-group-item-action"
+            type="button"
+            @click="selectRecipe(item)"
           >
             {{ item }}
+          </button>
+        </div>
+      </div>
+      <hr class="mt-2">
+      <div v-if="recipeName != ''">
+        <div class="fs-4 fw-bold text-success text-start mt-2">
+          레시피 설명
+        </div>
+        <div class="form-floating mb-3 mt-2">
+          <input
+            id="floatingInput"
+            v-model="recipeDescription"
+            type="text"
+            class="form-control"
+            placeholder=""
+          >
+          <label for="floatingInput">레시피 설명</label>
+        </div>
+      </div>
+      <div
+        v-for="(step, index) in recipeInfo"
+        :key="index"
+      >
+        <div class="col-4 text-start fs-4 fw-bold text-success mt-2">
+          {{ index + 1 }}단계
+        </div>
+        <div class="form-floating mt-1">
+          <textarea
+            id="stepArea"
+            v-model="recipeInfo[index]"
+            class="form-control"
+            placeholder="이곳에 레시피를 작성하세요"
+            style="height: 100px"
+          />
+          <label for="stepArea">이곳에 레시피를 작성하세요</label>
+        </div>
+      </div>
+      <div v-if="recipeName != ''">
+        <div class="d-grid gap-2 mt-3 mb-4">
+          <button
+            class="btn btn-success"
+            type="button"
+            @click="saveRecipe"
+          >
+            레시피 생성
           </button>
         </div>
       </div>
@@ -36,6 +82,9 @@
 import Nav from '@/components/Nav.vue'
 import axios from 'axios'
 import { debounce } from 'debounce'
+import { addDoc, collection } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, db } from '@/main'
 
 export default {
   name: 'CreateRecipe',
@@ -45,7 +94,12 @@ export default {
   data () {
     return {
       searchRecipe: '',
-      items: []
+      items: [],
+      recipeInfo: [],
+      allergic: [],
+      userUID: '',
+      recipeDescription: '',
+      recipeName: ''
     }
   },
   watch: {
@@ -63,6 +117,66 @@ export default {
           console.log(error)
         })
     }, 300)
+  },
+  mounted () {
+    this.checkAuth()
+  },
+  methods: {
+    selectRecipe (recipeItem) {
+      console.log(recipeItem)
+      this.recipeInfo = []
+      this.allergic = []
+      const allergicList = ['계란', '달걀', '우유', '콩', '돼지고기', '닭고기', '꽃게', '새우', '토마토', '복숭아', '메밀', '밀가루']
+      // d35f685e1fcf4194b1b4
+      axios.get('http://openapi.foodsafetykorea.go.kr/api/d35f685e1fcf4194b1b4/COOKRCP01/json/1/1/RCP_NM=' + recipeItem)
+        .then(response => {
+          const parseRecipe = JSON.parse(response.request.response)
+          const allergics = parseRecipe.COOKRCP01.row[0].RCP_PARTS_DTLS.split(/,|\n/)
+          for (const c in allergics) {
+            let checkAllergic = true
+            for (const d in allergicList) {
+              if (allergics[c].includes(allergicList[d])) {
+                checkAllergic = false
+              }
+            }
+            this.allergic.push({
+              name: allergics[c].replace(/[0-9]+g|[()]/g, '').replaceAll(' ', ''),
+              isAllergic: checkAllergic
+            })
+          }
+          this.recipeName = parseRecipe.COOKRCP01.row[0].RCP_NM
+          for (const i in parseRecipe.COOKRCP01.row[0]) {
+            if (i.includes('MANUAL0') || i.includes('MANUAL1')) {
+              if (parseRecipe.COOKRCP01.row[0][i] !== '') {
+                const replaceRecipe = parseRecipe.COOKRCP01.row[0][i].replace(/\n/g, ' ').replace(/[0-9].\s/g, '')
+                this.recipeInfo.push(replaceRecipe)
+              }
+            }
+          }
+          this.recipeInfo.sort()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    async saveRecipe () {
+      const docRef = await addDoc(collection(db, 'recipe_post'), {
+        uid: this.userUID,
+        recipeName: this.recipeName,
+        recipeInfo: this.recipeInfo,
+        recipeDescription: this.recipeDescription,
+        recipeLikes: []
+      })
+      console.log('Document written with ID: ', docRef.id)
+      this.$router.push('/')
+    },
+    checkAuth () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.userUID = user.uid
+        }
+      })
+    }
   }
 }
 </script>

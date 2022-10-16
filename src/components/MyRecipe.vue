@@ -7,7 +7,6 @@
     <!-- NOTE: 일단 카드 반응형인데 width 부분 auto로 하면 크기가 들쭉 날쭉 함 -->
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 text-start">
       <div class="col mb-4">
-        <!-- TODO: 로그인 아닐 시도 처리해야 함 -->
         <div v-if="user != null">
           <router-link
             to="/create-recipe"
@@ -61,7 +60,7 @@
                   {{ recipe.recipeName }}
                 </h5>
                 <p class="card-text">
-                  {{ recipe.recipeDesc }}
+                  {{ recipe.recipeDescription }}
                 </p>
               </div>
               <div class="card-footer text-muted fs-6">
