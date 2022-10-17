@@ -3,10 +3,11 @@ import App from './App.vue'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore, initializeFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
 Vue.config.productionTip = false
@@ -21,7 +22,7 @@ Vue.config.productionTip = false
 //   measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 // }
 
-// ANCHOR: publick repo니까 올리기 전에 이거 위에랑 바꾸고 커밋하기:
+// ANCHOR: public repo니까 올리기 전에 이거 위에랑 바꾸고 커밋하기:
 const firebaseConfig = {
   apiKey: 'AIzaSyCefLtppAt9PYjSpST-__acbtH-cisUTTg',
   authDomain: 'r-allerecipe.firebaseapp.com',
@@ -36,7 +37,10 @@ const app = initializeApp(firebaseConfig)
 // eslint-disable-next-line no-unused-vars
 const analytics = getAnalytics(app)
 const auth = getAuth()
-const db = getFirestore()
+initializeFirestore(app, {
+  ignoreUndefinedProperties: true
+})
+const db = getFirestore(app)
 const storage = getStorage()
 
 export { auth, db, storage }

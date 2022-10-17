@@ -143,7 +143,7 @@ export default {
     return {
       searchRecipe: '',
       items: [],
-      recipeInfo: [],
+      recipeInfo: {},
       allergic: [],
       userUID: '',
       recipeDescription: '',
@@ -185,14 +185,12 @@ export default {
   },
   methods: {
     selectRecipe (recipeItem) {
-      console.log(recipeItem)
       this.recipeInfo = []
       this.allergic = []
       const allergicList = ['계란', '달걀', '우유', '콩', '돼지고기', '닭고기', '꽃게', '새우', '토마토', '복숭아', '메밀', '밀가루']
       // d35f685e1fcf4194b1b4
       axios.get('http://openapi.foodsafetykorea.go.kr/api/d35f685e1fcf4194b1b4/COOKRCP01/json/1/1/RCP_NM=' + recipeItem)
         .then(response => {
-          console.log(response)
           const parseRecipe = JSON.parse(response.request.response)
           const allergics = parseRecipe.COOKRCP01.row[0].RCP_PARTS_DTLS.split(/,|\n/)
           for (const c in allergics) {
