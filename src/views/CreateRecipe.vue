@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div>
     <Nav />
@@ -27,6 +28,44 @@
           >
             {{ item }}
           </button>
+        </div>
+      </div>
+      <hr class="mt-2">
+      <div class="fs-4 fw-bold text-success text-start mt-4 mb-2">
+        레시피 재료
+      </div>
+      <div class="row row-cols-6 text-center">
+        <div
+          v-for="(item, index) in allergic"
+          :key="index"
+        >
+          <div class="col mb-2">
+            <div class="dropdown d-grid gap-2">
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                :disabled="item.isAllergic"
+              >
+                <option
+                  selected
+                >
+                  {{ item.name }}
+                </option>
+                <option
+                  v-for="(value, replaceItems, index2) in replaceAller"
+                  v-if="item.name.includes(replaceItems)"
+                  :key="index2"
+                >
+                  <div
+                    v-for="(j, i) in value"
+                    :key="i"
+                  >
+                    {{ j }}
+                  </div>
+                </option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
       <hr class="mt-2">
@@ -109,7 +148,20 @@ export default {
       userUID: '',
       recipeDescription: '',
       recipeName: '',
-      recipeImage: null
+      recipeImage: null,
+      replaceAller: {
+        계란: ['소고기', '돼지고기', '생선', '두부'],
+        달걀: ['소고기', '돼지고기', '생선', '두부'],
+        우유: ['두부', '콩', '호두', '땅콩', '견과류'],
+        콩: ['김', '미역', '멸치'],
+        돼지고기: ['소고기', '닭고기', '참치', '두부', '흰 살 생선'],
+        닭고기: ['소고기', '돼지고기', '참치', '두부', '고등어', '오징어', '콩'],
+        새우: ['동태'],
+        토마토: ['당근', '시금치', '브로콜리', '파프리카'],
+        복숭아: ['배', '딸기'],
+        메밀: ['밀가루'],
+        밀가루: ['전분가루', '쌀가루']
+      }
     }
   },
   watch: {
@@ -140,6 +192,7 @@ export default {
       // d35f685e1fcf4194b1b4
       axios.get('http://openapi.foodsafetykorea.go.kr/api/d35f685e1fcf4194b1b4/COOKRCP01/json/1/1/RCP_NM=' + recipeItem)
         .then(response => {
+          console.log(response)
           const parseRecipe = JSON.parse(response.request.response)
           const allergics = parseRecipe.COOKRCP01.row[0].RCP_PARTS_DTLS.split(/,|\n/)
           for (const c in allergics) {
@@ -158,7 +211,7 @@ export default {
           for (const i in parseRecipe.COOKRCP01.row[0]) {
             if (i.includes('MANUAL0') || i.includes('MANUAL1')) {
               if (parseRecipe.COOKRCP01.row[0][i] !== '') {
-                const replaceRecipe = parseRecipe.COOKRCP01.row[0][i].replace(/\n/g, ' ').replace(/[0-9].\s/g, '')
+                const replaceRecipe = parseRecipe.COOKRCP01.row[0][i].replace(/\n/g, ' ')
                 this.recipeInfo.push(replaceRecipe)
               }
             }
