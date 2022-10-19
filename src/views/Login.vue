@@ -63,13 +63,13 @@
                 로그인
               </button>
               <!-- TODO: 회원가입 페이지 만들고 링크 -->
-              <!-- <router-link
+              <router-link
                 class="btn btn-outline-success shadow-sm fw-bold"
                 type="button"
                 to="/register"
               >
                 회원가입
-              </router-link> -->
+              </router-link>
             </div>
           </div>
         </div>
@@ -107,6 +107,10 @@ export default {
         })
         .then(() => {
           console.log('Success Login')
+          this.$toast.success('로그인 성공!', {
+            position: 'top-center',
+            timeout: 3000
+          })
           this.$router.push('/').catch(() => {})
         })
         .catch((error) => {

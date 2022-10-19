@@ -1,7 +1,39 @@
 <template>
   <div class="container mt-4">
-    <div class="fs-4 fw-bold text-success text-start">
-      공유된 레시피
+    <div class="d-flex justify-content-between">
+      <div class="fs-4 fw-bold text-success text-start align-self-end">
+        공유된 레시피
+      </div>
+      <div class="align-bottom">
+        <div class="dropdown">
+          <button
+            id="dropdownMenuButton1"
+            class="btn btn-outline-success dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            정렬
+          </button>
+          <ul
+            class="dropdown-menu"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+              >최신순</a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="#"
+              >인기순</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <hr class="mt-2">
     <!-- NOTE: 일단 카드 반응형인데 width 부분 auto로 하면 크기가 들쭉 날쭉 함 -->

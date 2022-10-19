@@ -192,6 +192,10 @@ export default {
         })
         console.log('Document written with ID: ', docRef.id)
         this.inputComment = ''
+        this.$toast.success('댓글을 작성했습니다!', {
+          position: 'top-center',
+          timeout: 3000
+        })
       } catch (e) {
         console.error('Error adding document: ', e)
       }
@@ -205,6 +209,10 @@ export default {
         })
         console.log('Document written with ID: ', docRef.id)
         this.inputStepComment = []
+        this.$toast.success('댓글을 작성했습니다!', {
+          position: 'top-center',
+          timeout: 3000
+        })
       } catch (e) {
         console.error('Error adding document: ', e)
       }

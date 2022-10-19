@@ -230,6 +230,10 @@ export default {
         recipeImage: this.recipeImage
       })
       console.log('Document written with ID: ', docRef.id)
+      this.$toast.success('레시피를 생성했습니다!', {
+        position: 'top-center',
+        timeout: 3000
+      })
       this.$router.push('/')
     },
     checkAuth () {

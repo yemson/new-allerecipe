@@ -61,6 +61,10 @@ export default {
       auth.signOut()
         .then(() => {
           this.user = null
+          this.$toast.danger('로그아웃 성공!', {
+            position: 'top-center',
+            timeout: 3000
+          })
           this.$router.push('/').catch(() => {})
         })
     }
