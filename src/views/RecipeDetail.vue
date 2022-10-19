@@ -46,6 +46,22 @@
           :id="`collapse${index}`"
           class="collapse"
         >
+          <div
+            v-for="(stepComment, stepIndex) in stepComments"
+            :key="stepIndex"
+          >
+            <div v-if="index == stepComment.comment.indexOf(stepComment.comment.at(-1))">
+              <div class="card mb-3">
+                <div class="card-header text-start">
+                  {{ stepComment.userUID }}
+                </div>
+                <div class="card-body text-start fw-bold">
+                  {{ stepComment.comment.at(-1) }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="mt-2">
           <textarea
             id="commentArea"
             v-model="inputStepComment[index]"
@@ -133,13 +149,15 @@ export default {
       inputComment: '',
       userUID: '',
       comments: [],
-      inputStepComment: []
+      inputStepComment: [],
+      stepComments: []
     }
   },
   mounted () {
     this.getRecipeDetail()
     this.getUserUID()
     this.getComments()
+    this.getStepComments()
   },
   methods: {
     async getRecipeDetail () {
@@ -178,6 +196,18 @@ export default {
         this.comments = []
         snapshot.forEach((doc) => {
           this.comments.push({
+            id: doc.id,
+            ...doc.data()
+          })
+        })
+      })
+    },
+    async getStepComments () {
+      const q = query(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), orderBy('createdAt', 'desc'))
+      onSnapshot(q, (snapshot) => {
+        this.stepComments = []
+        snapshot.forEach((doc) => {
+          this.stepComments.push({
             id: doc.id,
             ...doc.data()
           })
