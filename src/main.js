@@ -9,8 +9,12 @@ import { getAnalytics } from 'firebase/analytics'
 import { getAuth } from 'firebase/auth'
 import { getFirestore, initializeFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
+
+Vue.use(Toast)
 
 // const firebaseConfig = {
 //   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,

@@ -8,11 +8,20 @@
         </div>
         <!-- TODO: 좋아요랑 스크랩 메소드 적용 -->
         <div class="col-6 text-end align-self-end">
-          <i
-            class="bi bi-bookmark fs-4"
-            style="margin-right: 0.8rem;"
-          />
-          <i class="bi bi-heart fs-4" />
+          <div v-if="canAccess">
+            <div v-if="!clicked">
+              <i
+                class="bi bi-heart fs-4"
+                @click="likeRecipe"
+              />
+            </div>
+            <div v-else>
+              <i
+                class="bi bi-heart-fill fs-4"
+                @click="likeRecipe"
+              />
+            </div>
+          </div>
         </div>
         <div class="text-start text-muted fs-5 mb-2">
           {{ recipeDetail.recipeDescription }}
@@ -68,12 +77,14 @@
             class="form-control"
             placeholder="이곳에 댓글을 작성하세요"
             style="height: 80px"
+            :disabled="!canAccess"
           />
           <div class="d-grid gap-2 mt-3 mb-4">
             <!-- TODO: 로그인 아닐 시 버튼 비활성화 -->
             <button
               class="btn btn-success"
               type="button"
+              :disabled="!canAccess"
               @click="createStepComment"
             >
               댓글 작성
@@ -115,6 +126,7 @@
           class="form-control"
           placeholder="이곳에 댓글을 작성하세요"
           style="height: 100px"
+          :disabled="!canAccess"
         />
         <label for="commentArea">이곳에 댓글을 작성하세요</label>
       </div>
@@ -123,6 +135,7 @@
         <button
           class="btn btn-success"
           type="button"
+          :disabled="!canAccess"
           @click="createComment"
         >
           댓글 작성
@@ -134,7 +147,7 @@
 
 <script>
 import Nav from '@/components/Nav.vue'
-import { getDoc, doc, addDoc, collection, query, onSnapshot, orderBy } from 'firebase/firestore'
+import { getDoc, doc, addDoc, collection, query, onSnapshot, orderBy, updateDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { db, auth } from '@/main'
 
@@ -150,7 +163,10 @@ export default {
       userUID: '',
       comments: [],
       inputStepComment: [],
-      stepComments: []
+      stepComments: [],
+      canAccess: false,
+      clicked: false,
+      likeCount: 0
     }
   },
   mounted () {
@@ -158,6 +174,9 @@ export default {
     this.getUserUID()
     this.getComments()
     this.getStepComments()
+  },
+  updated () {
+    this.checkLike()
   },
   methods: {
     async getRecipeDetail () {
@@ -218,6 +237,38 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.userUID = user.uid
+          this.canAccess = true
+        } else {
+          this.canAccess = false
+        }
+      })
+    },
+    async likeRecipe () {
+      const post = await getDoc(doc(db, `recipe_post/${this.$route.params.id}`))
+      const recipeLikes = post.data().recipeLikes
+      this.clicked = !this.clicked
+      if (this.clicked) {
+        recipeLikes.push(auth.currentUser.uid)
+        this.likeCount = recipeLikes.length
+      } else {
+        recipeLikes.splice(recipeLikes.indexOf(auth.currentUser.uid), 1)
+        this.likeCount = recipeLikes.length
+      }
+      await updateDoc(doc(db, `recipe_post/${this.$route.params.id}`), {
+        recipeLikes
+      })
+    },
+    async checkLike () {
+      const post = await getDoc(doc(db, `recipe_post/${this.$route.params.id}`))
+      const recipeLikes = post.data().recipeLikes
+      this.likeCount = recipeLikes.length
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (recipeLikes.includes(user.uid)) {
+            this.clicked = true
+          } else {
+            this.clicked = false
+          }
         }
       })
     }
