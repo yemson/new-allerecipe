@@ -76,13 +76,12 @@
 </template>
 
 <script>
-import { collection, onSnapshot, query } from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from '@/main'
 
 export default {
   name: 'MyRecipe',
-  components: {
-  },
+  components: {},
   data () {
     return {
       recipes: []
@@ -93,7 +92,7 @@ export default {
   },
   methods: {
     async getSharedRecipe () {
-      const q = query(collection(db, 'recipe_post'))
+      const q = query(collection(db, 'recipe_post'), where('isPublic', '==', true))
       onSnapshot(q, (snapshot) => {
         this.recipes = []
         snapshot.forEach((doc) => {

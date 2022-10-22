@@ -2,8 +2,29 @@
   <div>
     <Nav />
     <div class="container mt-4">
-      <div class="text-start fs-4 fw-bold text-success">
-        {{ recipeDetail.recipeName }}
+      <div class="d-flex">
+        <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
+          {{ recipeDetail.recipeName }}
+        </div>
+        <input
+          id="btn-check"
+          v-model="recipeDetail.isPublic"
+          autocomplete="off"
+          class="btn-check"
+          type="checkbox"
+        >
+        <div v-if="recipeDetail.isPublic">
+          <label
+            class="btn btn-success mt-4"
+            for="btn-check"
+          >레시피 공개</label>
+        </div>
+        <div v-else>
+          <label
+            class="btn btn-secondary mt-4"
+            for="btn-check"
+          >레시피 비공개</label>
+        </div>
       </div>
       <div class="form-floating mb-3 mt-2">
         <input
@@ -79,7 +100,8 @@ export default {
     async modifyRecipe () {
       await updateDoc(doc(db, `recipe_post/${this.$route.params.id}`), {
         recipeDescription: this.recipeDetail.recipeDescription,
-        recipeInfo: this.recipeDetail.recipeInfo
+        recipeInfo: this.recipeDetail.recipeInfo,
+        isPublic: this.recipeDetail.isPublic
       })
         .then(() => {
           this.$router.push({ name: 'RecipeDetail', params: { id: this.$route.params.id } })

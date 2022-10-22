@@ -3,8 +3,29 @@
   <div>
     <Nav />
     <div class="container">
-      <div class="fs-4 fw-bold text-success text-start mt-4">
-        레시피 제작
+      <div class="d-flex">
+        <div class="flex-grow-1 fs-4 fw-bold text-success text-start mt-4">
+          레시피 제작
+        </div>
+        <input
+          id="btn-check"
+          v-model="isPublic"
+          autocomplete="off"
+          class="btn-check"
+          type="checkbox"
+        >
+        <div v-if="isPublic">
+          <label
+            class="btn btn-success mt-4"
+            for="btn-check"
+          >레시피 공개</label>
+        </div>
+        <div v-else>
+          <label
+            class="btn btn-secondary mt-4"
+            for="btn-check"
+          >레시피 비공개</label>
+        </div>
       </div>
       <div class="form-floating my-2">
         <input
@@ -161,7 +182,8 @@ export default {
         복숭아: ['배', '딸기'],
         메밀: ['밀가루'],
         밀가루: ['전분가루', '쌀가루']
-      }
+      },
+      isPublic: true
     }
   },
   watch: {
@@ -227,7 +249,8 @@ export default {
         recipeInfo: this.recipeInfo,
         recipeDescription: this.recipeDescription,
         recipeLikes: [],
-        recipeImage: this.recipeImage
+        recipeImage: this.recipeImage,
+        isPublic: this.isPublic
       })
       console.log('Document written with ID: ', docRef.id)
       this.$toast.success('레시피를 생성했습니다!', {
