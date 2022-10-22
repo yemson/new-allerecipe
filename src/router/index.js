@@ -20,6 +20,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "recipe-detail" */ '../views/RecipeDetail.vue')
   },
   {
+    path: '/modify-recipe/:id',
+    name: 'ModifyRecipe',
+    component: () => import(/* webpackChunkName: "modify-recipe" */ '../views/ModifyRecipe.vue')
+  },
+  {
     path: '/create-recipe',
     name: 'CreateRecipe',
     component: () => import(/* webpackChunkName: "create-recipe" */ '../views/CreateRecipe.vue')

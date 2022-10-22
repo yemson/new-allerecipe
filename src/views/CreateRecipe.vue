@@ -10,9 +10,9 @@
         <input
           id="searchInput"
           v-model="searchRecipe"
-          type="search"
           class="form-control"
           placeholder="레시피 검색"
+          type="search"
         >
         <label for="searchInput">레시피 검색</label>
       </div>
@@ -42,9 +42,9 @@
           <div class="col mb-2">
             <div class="dropdown d-grid gap-2">
               <select
-                class="form-select"
-                aria-label="Default select example"
                 :disabled="item.isAllergic"
+                aria-label="Default select example"
+                class="form-select"
               >
                 <option
                   selected
@@ -69,7 +69,7 @@
         </div>
       </div>
       <hr class="mt-2">
-      <div v-if="recipeName != ''">
+      <div v-if="recipeName !== ''">
         <div class="fs-4 fw-bold text-success text-start mt-2">
           레시피 설명
         </div>
@@ -77,9 +77,9 @@
           <input
             id="floatingInput"
             v-model="recipeDescription"
-            type="text"
             class="form-control"
             placeholder=""
+            type="text"
           >
           <label for="floatingInput">레시피 설명</label>
         </div>
@@ -110,7 +110,7 @@
           <label for="stepArea">이곳에 레시피를 작성하세요</label>
         </div>
       </div>
-      <div v-if="recipeName != ''">
+      <div v-if="recipeName !== ''">
         <div class="d-grid gap-2 mt-3 mb-4">
           <button
             class="btn btn-success"
@@ -131,7 +131,7 @@ import axios from 'axios'
 import { debounce } from 'debounce'
 import { addDoc, collection } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { auth, db, storage } from '@/main'
 
 export default {

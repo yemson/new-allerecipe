@@ -23,15 +23,15 @@
               style="margin-top: 2rem;"
             >
               <label
-                for="emailInput"
                 class="form-label fw-bold"
+                for="emailInput"
               >이메일</label>
               <input
                 id="emailInput"
                 v-model="email"
-                type="email"
                 class="form-control shadow-sm fw-bold"
                 placeholder="이메일 입력"
+                type="email"
               >
             </div>
             <div
@@ -39,15 +39,15 @@
               style="margin-top: 1.5rem;"
             >
               <label
-                for="passwordInput"
                 class="form-label fw-bold"
+                for="passwordInput"
               >비밀번호</label>
               <input
                 id="passwordInput"
                 v-model="password"
-                type="password"
                 class="form-control shadow-sm fw-bold"
                 placeholder="비밀번호 입력"
+                type="password"
                 @keyup.enter="login"
               >
             </div>
@@ -64,8 +64,8 @@
               </button>
               <router-link
                 class="btn btn-outline-success shadow-sm fw-bold"
-                type="button"
                 to="/register"
+                type="button"
               >
                 회원가입
               </router-link>
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { onAuthStateChanged, setPersistence, browserSessionPersistence, signInWithEmailAndPassword } from 'firebase/auth'
+import { browserSessionPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/main'
 import Nav from '@/components/Nav.vue'
 

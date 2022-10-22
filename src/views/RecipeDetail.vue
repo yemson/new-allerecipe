@@ -6,15 +6,20 @@
         <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
         </div>
-        <!-- <div class="col-6 text-end align-self-end">
-          작성자: {{ recipeDetail.uid }}
-        </div> -->
+        <router-link
+          :to="`/modify-recipe/${this.$route.params.id}`"
+          class="btn btn-outline-success text-end align-self-end"
+        >
+          수정
+        </router-link>
       </div>
       <div class="text-start text-muted fs-5 mb-2">
         {{ recipeDetail.recipeDescription }}
       </div>
       <img
         :src="recipeDetail.recipeImage"
+        alt="recipeImage"
+        class="rounded"
         style="width: 100%; height: 30rem; object-fit: cover;"
       >
       <hr class="mt-2">
@@ -23,11 +28,11 @@
         :key="index"
       >
         <div
-          class="card shadow-sm my-3"
-          data-bs-toggle="collapse"
+          :aria-controls="'collapse' + index"
           :data-bs-target="`#collapse${index}`"
           aria-expanded="false"
-          :aria-controls="'collapse' + index"
+          class="card shadow-sm my-3"
+          data-bs-toggle="collapse"
         >
           <div class="card-body fw-bold text-start">
             {{ recipe }}
@@ -41,7 +46,7 @@
             v-for="(stepComment, stepIndex) in stepComments"
             :key="stepIndex"
           >
-            <div v-if="index == stepComment.comment.indexOf(stepComment.comment.at(-1))">
+            <div v-if="index === stepComment.comment.indexOf(stepComment.comment.at(-1))">
               <div class="card mb-3">
                 <div class="card-header text-start">
                   {{ stepComment.userUID }}
@@ -56,16 +61,16 @@
           <textarea
             id="commentArea"
             v-model="inputStepComment[index]"
+            :disabled="!canAccess"
             class="form-control"
             placeholder="이곳에 댓글을 작성하세요"
             style="height: 80px"
-            :disabled="!canAccess"
           />
           <div class="d-grid gap-2 mt-3 mb-4">
             <button
+              :disabled="!canAccess"
               class="btn btn-success"
               type="button"
-              :disabled="!canAccess"
               @click="createStepComment"
             >
               댓글 작성
@@ -83,16 +88,16 @@
         <div v-if="canAccess">
           <i
             class="bi bi-bookmark-plus fs-5"
-            style="margin-right: 1rem"
-            data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            data-bs-toggle="modal"
+            style="margin-right: 1rem"
           />
           <div
             id="exampleModal"
+            aria-hidden="true"
+            aria-labelledby="exampleModalLabel"
             class="modal fade"
             tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
           >
             <div class="modal-dialog">
               <div class="modal-content">
@@ -104,10 +109,10 @@
                     레시피 스크랩
                   </h1>
                   <button
-                    type="button"
+                    aria-label="Close"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    type="button"
                   />
                 </div>
                 <div class="modal-body">
@@ -115,15 +120,15 @@
                 </div>
                 <div class="modal-footer">
                   <button
-                    type="button"
                     class="btn btn-secondary"
                     data-bs-dismiss="modal"
+                    type="button"
                   >
                     취소
                   </button>
                   <button
-                    type="button"
                     class="btn btn-success"
+                    type="button"
                   >
                     스크랩하기
                   </button>
@@ -151,7 +156,7 @@
       <div class="col-4 text-start fs-4 fw-bold text-success">
         댓글
       </div>
-      <div v-if="comments.length == 0">
+      <div v-if="comments.length === 0">
         <p class="text-muted text-start mt-2">
           댓글이 없습니다.
         </p>
@@ -179,18 +184,18 @@
         <textarea
           id="commentArea"
           v-model="inputComment"
+          :disabled="!canAccess"
           class="form-control"
           placeholder="이곳에 댓글을 작성하세요"
           style="height: 100px"
-          :disabled="!canAccess"
         />
         <label for="commentArea">이곳에 댓글을 작성하세요</label>
       </div>
       <div class="d-grid gap-2 mt-3 mb-4">
         <button
+          :disabled="!canAccess"
           class="btn btn-success"
           type="button"
-          :disabled="!canAccess"
           @click="createComment"
         >
           댓글 작성
@@ -202,9 +207,9 @@
 
 <script>
 import Nav from '@/components/Nav.vue'
-import { getDoc, doc, addDoc, collection, query, onSnapshot, orderBy, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-import { db, auth } from '@/main'
+import { auth, db } from '@/main'
 
 export default {
   name: 'RecipeDetail',
@@ -327,11 +332,7 @@ export default {
       this.likeCount = recipeLikes.length
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          if (recipeLikes.includes(user.uid)) {
-            this.clicked = true
-          } else {
-            this.clicked = false
-          }
+          this.clicked = !!recipeLikes.includes(user.uid)
         }
       })
     }

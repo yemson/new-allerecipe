@@ -4,13 +4,13 @@
       나의 레시피
     </div>
     <hr class="mt-2">
-    <!-- NOTE: 일단 카드 반응형인데 width 부분 auto로 하면 크기가 들쭉 날쭉 함 -->
+    <!-- NOTE: 일단 카드 반응형인데 width 부분 auto 로 하면 크기가 들쭉 날쭉 함 -->
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 text-start">
       <div class="col mb-4">
         <div v-if="user != null">
           <router-link
-            to="/create-recipe"
             style="text-decoration: none; color: inherit"
+            to="/create-recipe"
           >
             <div
               class="card shadow-sm"
@@ -52,6 +52,7 @@
             >
               <img
                 :src="recipe.recipeImage"
+                alt="recipeImage"
                 class="card-img-top"
                 height="200"
               >
@@ -76,13 +77,12 @@
 
 <script>
 import { onAuthStateChanged } from 'firebase/auth'
-import { query, collection, onSnapshot, where } from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { auth, db } from '@/main'
 
 export default {
   name: 'MyRecipe',
-  components: {
-  },
+  components: {},
   data () {
     return {
       user: null,
@@ -121,6 +121,6 @@ export default {
 }
 </script>
 
-<style scope>
+<style>
 
 </style>

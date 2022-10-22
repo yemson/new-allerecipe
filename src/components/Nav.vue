@@ -5,8 +5,8 @@
     >
       <div class="container">
         <router-link
-          to="/"
           class="navbar-brand fs-4 text-light"
+          to="/"
         >
           Allerecipe
         </router-link>

@@ -8,16 +8,16 @@
         <div class="dropdown">
           <button
             id="dropdownMenuButton1"
-            class="btn btn-outline-success dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
             aria-expanded="false"
+            class="btn btn-outline-success dropdown-toggle"
+            data-bs-toggle="dropdown"
+            type="button"
           >
             정렬
           </button>
           <ul
-            class="dropdown-menu"
             aria-labelledby="dropdownMenuButton1"
+            class="dropdown-menu"
           >
             <li>
               <a
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { query, collection, onSnapshot } from 'firebase/firestore'
+import { collection, onSnapshot, query } from 'firebase/firestore'
 import { db } from '@/main'
 
 export default {
