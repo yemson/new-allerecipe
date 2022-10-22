@@ -6,12 +6,21 @@
         <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
         </div>
-        <router-link
-          :to="`/modify-recipe/${this.$route.params.id}`"
-          class="btn btn-outline-success text-end align-self-end"
-        >
-          수정
-        </router-link>
+        <div v-if="recipeDetail.uid === userUID">
+          <router-link
+            :to="`/modify-recipe/${this.$route.params.id}`"
+            class="btn btn-outline-success text-end align-self-end"
+          >
+            수정
+          </router-link>
+          <div
+            class="btn btn-danger"
+            style="margin-left: 0.5em;"
+            @click="deleteRecipe"
+          >
+            삭제
+          </div>
+        </div>
       </div>
       <div class="text-start text-muted fs-5 mb-2">
         {{ recipeDetail.recipeDescription }}
@@ -207,7 +216,7 @@
 
 <script>
 import Nav from '@/components/Nav.vue'
-import { addDoc, collection, doc, getDoc, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '@/main'
 
@@ -335,6 +344,17 @@ export default {
           this.clicked = !!recipeLikes.includes(user.uid)
         }
       })
+    },
+    async deleteRecipe () {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        await deleteDoc(doc(db, `recipe_post/${this.$route.params.id}`))
+        this.$toast.success('삭제되었습니다!', {
+          position: 'top-center',
+          timeout: 3000
+        })
+        this.$router.push('/').catch(() => {
+        })
+      }
     }
     // async forkRecipe () {
     //   const docRef = await addDoc(collection(db, 'fork_recipe_post'), {
