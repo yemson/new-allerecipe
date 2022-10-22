@@ -62,7 +62,6 @@
               >
                 로그인
               </button>
-              <!-- TODO: 회원가입 페이지 만들고 링크 -->
               <router-link
                 class="btn btn-outline-success shadow-sm fw-bold"
                 type="button"

@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <Nav />
-    <!-- TODO: Carousel 추가 -->
     <MyRecipe />
     <SharedRecipe />
   </div>

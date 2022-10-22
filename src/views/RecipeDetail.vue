@@ -2,34 +2,16 @@
   <div>
     <Nav />
     <div class="container mt-4">
-      <div class="row justify-content-between">
-        <div class="col-6 text-start fs-4 fw-bold text-success">
+      <div class="d-flex">
+        <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
         </div>
-        <!-- TODO: 좋아요랑 스크랩 메소드 적용 -->
-        <div class="col-6 text-end align-self-end">
-          <div v-if="canAccess">
-            <div v-if="!clicked">
-              <i
-                class="bi bi-heart fs-4"
-                @click="likeRecipe"
-              />
-            </div>
-            <div v-else>
-              <i
-                class="bi bi-heart-fill fs-4"
-                @click="likeRecipe"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="text-start text-muted fs-5 mb-2">
-          {{ recipeDetail.recipeDescription }}
-        </div>
-        <!-- TODO: 작성자 이름 크기 반응형 필요 -->
         <!-- <div class="col-6 text-end align-self-end">
           작성자: {{ recipeDetail.uid }}
         </div> -->
+      </div>
+      <div class="text-start text-muted fs-5 mb-2">
+        {{ recipeDetail.recipeDescription }}
       </div>
       <img
         :src="recipeDetail.recipeImage"
@@ -80,7 +62,6 @@
             :disabled="!canAccess"
           />
           <div class="d-grid gap-2 mt-3 mb-4">
-            <!-- TODO: 로그인 아닐 시 버튼 비활성화 -->
             <button
               class="btn btn-success"
               type="button"
@@ -92,6 +73,81 @@
           </div>
         </div>
       </div>
+      <div class="d-flex">
+        <div
+          class="flex-grow-1 text-start pt-1"
+          style="font-size: 0.8rem;"
+        >
+          작성자: {{ recipeDetail.uid }}
+        </div>
+        <div v-if="canAccess">
+          <i
+            class="bi bi-bookmark-plus fs-5"
+            style="margin-right: 1rem"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          />
+          <div
+            id="exampleModal"
+            class="modal fade"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1
+                    id="exampleModalLabel"
+                    class="modal-title fs-5"
+                  >
+                    레시피 스크랩
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div class="modal-body">
+                  {{ recipeDetail.recipeName }}을(를) 스크랩 하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                  >
+                    스크랩하기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="canAccess">
+          <div v-if="!clicked">
+            <i
+              class="bi bi-heart fs-5"
+              @click="likeRecipe"
+            />
+          </div>
+          <div v-else>
+            <i
+              class="bi bi-heart-fill fs-5"
+              @click="likeRecipe"
+            />
+          </div>
+        </div>
+      </div>
+      <hr class="mt-2">
       <div class="col-4 text-start fs-4 fw-bold text-success">
         댓글
       </div>
@@ -131,7 +187,6 @@
         <label for="commentArea">이곳에 댓글을 작성하세요</label>
       </div>
       <div class="d-grid gap-2 mt-3 mb-4">
-        <!-- TODO: 로그인 아닐 시 버튼 비활성화 -->
         <button
           class="btn btn-success"
           type="button"
@@ -280,6 +335,22 @@ export default {
         }
       })
     }
+    // async forkRecipe () {
+    //   const docRef = await addDoc(collection(db, 'fork_recipe_post'), {
+    //     uid: this.userUID,
+    //     recipeName: this.recipeName,
+    //     recipeInfo: this.recipeInfo,
+    //     recipeDescription: this.recipeDescription,
+    //     recipeLikes: [],
+    //     recipeImage: this.recipeImage
+    //   })
+    //   console.log('Document written with ID: ', docRef.id)
+    //   this.$toast.success('레시피를 생성했습니다!', {
+    //     position: 'top-center',
+    //     timeout: 3000
+    //   })
+    //   this.$router.push('/')
+    // }
   }
 }
 </script>
