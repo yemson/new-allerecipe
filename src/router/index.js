@@ -25,6 +25,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "modify-recipe" */ '../views/ModifyRecipe.vue')
   },
   {
+    path: '/fork-recipe/:id',
+    name: 'ForkRecipe',
+    component: () => import(/* webpackChunkName: "fork-recipe" */ '../views/ForkRecipe.vue')
+  },
+  {
     path: '/create-recipe',
     name: 'CreateRecipe',
     component: () => import(/* webpackChunkName: "create-recipe" */ '../views/CreateRecipe.vue')

@@ -2,6 +2,11 @@
   <div>
     <Nav />
     <div class="container mt-4">
+      <div v-if="recipeDetail.forkUID">
+        <div class="text-muted text-start">
+          {{ recipeDetail.forkUID }} -> {{ recipeDetail.uid }}
+        </div>
+      </div>
       <div class="d-flex">
         <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
@@ -137,7 +142,9 @@
                   </button>
                   <button
                     class="btn btn-success"
+                    data-bs-dismiss="modal"
                     type="button"
+                    @click="forkRecipe"
                   >
                     스크랩하기
                   </button>
@@ -355,23 +362,26 @@ export default {
         this.$router.push('/').catch(() => {
         })
       }
+    },
+    forkRecipe: async function () {
+      const docRef = await addDoc(collection(db, 'recipe_post'), {
+        uid: this.userUID,
+        forkUID: this.recipeDetail.uid,
+        recipeName: this.recipeDetail.recipeName,
+        recipeInfo: this.recipeDetail.recipeInfo,
+        recipeDescription: this.recipeDetail.recipeDescription,
+        recipeLikes: [],
+        recipeImage: this.recipeDetail.recipeImage,
+        isPublic: false
+      })
+      console.log('Document written with ID: ', docRef.id)
+      this.$toast.success('레시피를 스크랩했습니다!', {
+        position: 'top-center',
+        timeout: 3000
+      })
+      this.$router.push(`/fork-recipe/${docRef.id}`).catch(() => {
+      })
     }
-    // async forkRecipe () {
-    //   const docRef = await addDoc(collection(db, 'fork_recipe_post'), {
-    //     uid: this.userUID,
-    //     recipeName: this.recipeName,
-    //     recipeInfo: this.recipeInfo,
-    //     recipeDescription: this.recipeDescription,
-    //     recipeLikes: [],
-    //     recipeImage: this.recipeImage
-    //   })
-    //   console.log('Document written with ID: ', docRef.id)
-    //   this.$toast.success('레시피를 생성했습니다!', {
-    //     position: 'top-center',
-    //     timeout: 3000
-    //   })
-    //   this.$router.push('/')
-    // }
   }
 }
 </script>
