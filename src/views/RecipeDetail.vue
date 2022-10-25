@@ -261,34 +261,48 @@ export default {
     },
     async createComment () {
       try {
-        const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/comments`), {
-          comment: this.inputComment,
-          createdAt: Date.now(),
-          userUID: this.userUID
-        })
-        console.log('Document written with ID: ', docRef.id)
-        this.inputComment = ''
-        this.$toast.success('댓글을 작성했습니다!', {
-          position: 'top-center',
-          timeout: 3000
-        })
+        if (this.inputComment.length === 0) {
+          this.$toast.error('댓글을 작성해주세요!', {
+            position: 'top-center',
+            timeout: 3000
+          })
+        } else {
+          const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/comments`), {
+            comment: this.inputComment,
+            createdAt: Date.now(),
+            userUID: this.userUID
+          })
+          console.log('Document written with ID: ', docRef.id)
+          this.inputComment = ''
+          this.$toast.success('댓글을 작성했습니다!', {
+            position: 'top-center',
+            timeout: 3000
+          })
+        }
       } catch (e) {
         console.error('Error adding document: ', e)
       }
     },
     async createStepComment () {
       try {
-        const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), {
-          comment: this.inputStepComment,
-          createdAt: Date.now(),
-          userUID: this.userUID
-        })
-        console.log('Document written with ID: ', docRef.id)
-        this.inputStepComment = []
-        this.$toast.success('댓글을 작성했습니다!', {
-          position: 'top-center',
-          timeout: 3000
-        })
+        if (this.inputStepComment.length === 0) {
+          this.$toast.error('댓글을 작성해주세요!', {
+            position: 'top-center',
+            timeout: 3000
+          })
+        } else {
+          const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), {
+            stepComment: this.inputStepComment,
+            createdAt: Date.now(),
+            userUID: this.userUID
+          })
+          console.log('Document written with ID: ', docRef.id)
+          this.inputStepComment = []
+          this.$toast.success('댓글을 작성했습니다!', {
+            position: 'top-center',
+            timeout: 3000
+          })
+        }
       } catch (e) {
         console.error('Error adding document: ', e)
       }
