@@ -3,6 +3,7 @@
     <Nav />
     <MyRecipe />
     <SharedRecipe />
+    <Footer />
   </div>
 </template>
 
@@ -11,13 +12,15 @@
 import Nav from '@/components/Nav.vue'
 import MyRecipe from '../components/MyRecipe.vue'
 import SharedRecipe from '../components/SharedRecipe.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
   name: 'Home',
   components: {
     Nav,
     MyRecipe,
-    SharedRecipe
+    SharedRecipe,
+    Footer
   },
   data () {
     return {
