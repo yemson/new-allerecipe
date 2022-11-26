@@ -22,12 +22,37 @@
             </router-link>
           </div>
           <div v-if="user !== null">
-            <button
-              class="btn fw-bold text-light"
-              @click="logout"
-            >
-              로그아웃
-            </button>
+            <!-- TODO: 드롭다운 쓰는데 왜 자꾸 팝업 경고 뜨냐 개빡치게 -->
+            <div class="dropdown">
+              <button
+                class="btn fw-bold text-light dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                더보기
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <router-link
+                    class="dropdown-item"
+                    type="button"
+                    to="/my-page"
+                  >
+                    마이페이지
+                  </router-link>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    @click="logout"
+                  >
+                    로그아웃
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </form>
       </div>
@@ -61,6 +86,7 @@ export default {
       auth.signOut()
         .then(() => {
           this.user = null
+          // TODO: 아니 다른건 다 되면서 이것만 토스트가 안 뜨냐 개빡치네
           this.$toast.danger('로그아웃 성공!', {
             position: 'top-center',
             timeout: 3000

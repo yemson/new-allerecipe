@@ -164,9 +164,10 @@ export default {
     return {
       searchRecipe: '',
       items: [],
+      userEmail: '',
+      userUID: '',
       recipeInfo: {},
       allergic: [],
-      userUID: '',
       recipeDescription: '',
       recipeName: '',
       recipeImage: null,
@@ -244,7 +245,8 @@ export default {
     },
     async saveRecipe () {
       const docRef = await addDoc(collection(db, 'recipe_post'), {
-        uid: this.userUID,
+        userEmail: this.userEmail,
+        userUID: this.userUID,
         recipeName: this.recipeName,
         recipeInfo: this.recipeInfo,
         recipeDescription: this.recipeDescription,
@@ -262,6 +264,7 @@ export default {
     checkAuth () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
+          this.userEmail = user.email
           this.userUID = user.uid
         }
       })

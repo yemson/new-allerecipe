@@ -65,7 +65,7 @@
                 </p>
               </div>
               <div class="card-footer text-muted fs-6">
-                {{ recipe.uid }}
+                {{ recipe.userEmail }}
               </div>
             </div>
           </router-link>
@@ -97,7 +97,7 @@ export default {
     getMyRecipes () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          const q = query(collection(db, 'recipe_post'), where('uid', '==', `${user.uid}`))
+          const q = query(collection(db, 'recipe_post'), where('userUID', '==', `${user.uid}`))
           onSnapshot(q, (snapshot) => {
             this.recipes = []
             snapshot.forEach((doc) => {

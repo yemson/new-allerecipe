@@ -33,6 +33,11 @@ const routes = [
     path: '/create-recipe',
     name: 'CreateRecipe',
     component: () => import(/* webpackChunkName: "create-recipe" */ '../views/CreateRecipe.vue')
+  },
+  {
+    path: '/my-page',
+    name: 'MyPage',
+    component: () => import(/* webpackChunkName: "my-page" */ '../views/MyPage.vue')
   }
 ]
 

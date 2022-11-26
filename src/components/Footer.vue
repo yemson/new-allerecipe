@@ -4,7 +4,7 @@
     <footer class="container mb-4">
       <hr class="mt-2">
       <div
-        class="text-uppercase text-start"
+        class="text-uppercase text-start text-muted"
       >
         Allerecipe
       </div>

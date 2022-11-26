@@ -43,7 +43,7 @@
         :src="recipeDetail.recipeImage"
         alt="recipeImage"
         class="rounded"
-        style="width: 100%; height: 30rem; object-fit: cover;"
+        style="width: 100%; height: 15rem; object-fit: cover;"
       >
       <hr class="mt-2">
       <div

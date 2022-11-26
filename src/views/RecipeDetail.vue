@@ -11,7 +11,7 @@
         <div class="flex-grow-1 text-start fs-4 fw-bold text-success">
           {{ recipeDetail.recipeName }}
         </div>
-        <div v-if="recipeDetail.uid === userUID">
+        <div v-if="recipeDetail.userUID === userUID">
           <router-link
             :to="`/modify-recipe/${this.$route.params.id}`"
             class="btn btn-outline-success text-end align-self-end"
@@ -34,7 +34,7 @@
         :src="recipeDetail.recipeImage"
         alt="recipeImage"
         class="rounded"
-        style="width: 100%; height: 30rem; object-fit: cover;"
+        style="width: 100%; height: 15rem; object-fit: cover;"
       >
       <hr class="mt-2">
       <div
@@ -97,7 +97,7 @@
           class="flex-grow-1 text-start pt-1"
           style="font-size: 0.8rem;"
         >
-          작성자: {{ recipeDetail.uid }}
+          작성자: {{ recipeDetail.userEmail }}
         </div>
         <div v-if="canAccess">
           <i
@@ -237,6 +237,7 @@ export default {
       recipeDetail: [],
       inputComment: '',
       userUID: '',
+      userEmail: '',
       comments: [],
       inputStepComment: [],
       stepComments: [],
@@ -247,7 +248,7 @@ export default {
   },
   mounted () {
     this.getRecipeDetail()
-    this.getUserUID()
+    this.getUserInfo()
     this.getComments()
     this.getStepComments()
   },
@@ -342,10 +343,11 @@ export default {
         })
       })
     },
-    getUserUID () {
+    getUserInfo () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.userUID = user.uid
+          this.userEmail = user.email
           this.canAccess = true
         } else {
           this.canAccess = false
@@ -391,7 +393,7 @@ export default {
     forkRecipe: async function () {
       const docRef = await addDoc(collection(db, 'recipe_post'), {
         uid: this.userUID,
-        forkUID: this.recipeDetail.uid,
+        forkUID: this.recipeDetail.userUID,
         recipeName: this.recipeDetail.recipeName,
         recipeInfo: this.recipeDetail.recipeInfo,
         recipeDescription: this.recipeDetail.recipeDescription,

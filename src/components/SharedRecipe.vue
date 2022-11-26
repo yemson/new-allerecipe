@@ -65,7 +65,7 @@
                 </p>
               </div>
               <div class="card-footer text-muted fs-6">
-                {{ recipe.uid }}
+                {{ recipe.userEmail }}
               </div>
             </div>
           </router-link>
@@ -80,7 +80,7 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from '@/main'
 
 export default {
-  name: 'MyRecipe',
+  name: 'SharedRecipe',
   components: {},
   data () {
     return {
