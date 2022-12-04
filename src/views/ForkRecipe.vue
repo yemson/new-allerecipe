@@ -3,7 +3,7 @@
     <Nav />
     <div class="container mt-4">
       <div class="text-muted text-start">
-        {{ recipeDetail.forkUID }} -> {{ recipeDetail.uid }}
+        {{ recipeDetail.forkEmail }} -> {{ recipeDetail.email }}
       </div>
       <div class="d-flex">
         <div class="flex-grow-1 text-start fs-4 fw-bold text-success">

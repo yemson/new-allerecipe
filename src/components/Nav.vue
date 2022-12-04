@@ -86,11 +86,6 @@ export default {
       auth.signOut()
         .then(() => {
           this.user = null
-          // TODO: 아니 다른건 다 되면서 이것만 토스트가 안 뜨냐 개빡치네
-          this.$toast.danger('로그아웃 성공!', {
-            position: 'top-center',
-            timeout: 3000
-          })
           this.$router.push('/').catch(() => {})
         })
     }

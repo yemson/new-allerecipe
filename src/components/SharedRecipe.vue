@@ -2,7 +2,7 @@
   <div class="container mt-4">
     <div class="d-flex justify-content-between">
       <div class="fs-4 fw-bold text-success text-start align-self-end">
-        공유된 레시피
+        공유 레시피
       </div>
       <div class="align-bottom">
         <div class="dropdown">

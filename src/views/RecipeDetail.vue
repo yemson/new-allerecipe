@@ -63,7 +63,7 @@
             <div v-if="index === stepComment.comment.indexOf(stepComment.comment.at(-1))">
               <div class="card mb-3">
                 <div class="card-header text-start">
-                  {{ stepComment.userUID }}
+                  {{ stepComment.userEmail }}
                 </div>
                 <div class="card-body text-start fw-bold">
                   {{ stepComment.comment.at(-1) }}
@@ -184,7 +184,7 @@
         >
           <div class="card shadow-sm my-3">
             <div class="card-header text-start">
-              {{ comment.userUID }}
+              {{ comment.userEmail }}
             </div>
             <div class="card-body fw-bold text-start">
               {{ comment.comment }}
@@ -271,7 +271,8 @@ export default {
           const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/comments`), {
             comment: this.inputComment,
             createdAt: Date.now(),
-            userUID: this.userUID
+            userUID: this.userUID,
+            userEmail: this.userEmail
           })
           console.log('Document written with ID: ', docRef.id)
           this.inputComment = ''
@@ -307,7 +308,8 @@ export default {
         const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), {
           comment: this.inputStepComment,
           createdAt: Date.now(),
-          userUID: this.userUID
+          userUID: this.userUID,
+          userEmail: this.userEmail
         })
         console.log('Document written with ID: ', docRef.id)
         this.inputStepComment = []
@@ -393,7 +395,9 @@ export default {
     forkRecipe: async function () {
       const docRef = await addDoc(collection(db, 'recipe_post'), {
         uid: this.userUID,
+        email: this.userEmail,
         forkUID: this.recipeDetail.userUID,
+        forkEmail: this.recipeDetail.userEmail,
         recipeName: this.recipeDetail.recipeName,
         recipeInfo: this.recipeDetail.recipeInfo,
         recipeDescription: this.recipeDetail.recipeDescription,
