@@ -4,10 +4,7 @@
       <div class="fs-2 fw-bold text-success text-start align-self-end">
         공유 레시피
       </div>
-      <div
-        class="vr"
-        style="width: 2px"
-      />
+      <!-- TODO: > 버튼 추가하셈 -->
     </div>
     <ul
       id="pills-tab"

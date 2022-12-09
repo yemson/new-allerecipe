@@ -46,6 +46,7 @@
         기타
       </router-link>
     </div>
+    <hr style="margin-bottom: 2.4em;">
   </div>
 </template>
 
