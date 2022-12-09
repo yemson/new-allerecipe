@@ -4,38 +4,44 @@
       <!--      to="/category-view"-->
       <!--      :to="`/recipe-detail/${recipe.id}`"-->
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/steaming"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         찌기
       </router-link>
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/boiling"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         끓이기
       </router-link>
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/baking"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         굽기
       </router-link>
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/frying"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         튀기기
       </router-link>
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/stir-frying"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         볶기
       </router-link>
       <router-link
+        class="btn fw-bold fs-5 text-success border-0 me-2 col"
+        to="/category-view/etc"
         type="button"
-        class="btn fw-bold fs-5 text-success me-2 col"
       >
         기타
       </router-link>

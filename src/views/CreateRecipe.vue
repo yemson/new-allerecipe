@@ -171,6 +171,7 @@ export default {
       recipeDescription: '',
       recipeName: '',
       recipeImage: null,
+      recipeWay: '',
       replaceAller: {
         계란: ['소고기', '돼지고기', '생선', '두부'],
         달걀: ['소고기', '돼지고기', '생선', '두부'],
@@ -215,20 +216,21 @@ export default {
       axios.get('https://openapi.foodsafetykorea.go.kr/api/d35f685e1fcf4194b1b4/COOKRCP01/json/1/1/RCP_NM=' + recipeItem)
         .then(response => {
           const parseRecipe = JSON.parse(response.request.response)
-          const allergics = parseRecipe.COOKRCP01.row[0].RCP_PARTS_DTLS.split(/,|\n/)
-          for (const c in allergics) {
+          const allergies = parseRecipe.COOKRCP01.row[0].RCP_PARTS_DTLS.split(/,|\n/)
+          for (const c in allergies) {
             let checkAllergic = true
             for (const d in allergicList) {
-              if (allergics[c].includes(allergicList[d])) {
+              if (allergies[c].includes(allergicList[d])) {
                 checkAllergic = false
               }
             }
             this.allergic.push({
-              name: allergics[c].replace(/[0-9]+g|[()]/g, '').replaceAll(' ', ''),
+              name: allergies[c].replace(/[0-9]+g|[()]/g, '').replaceAll(' ', ''),
               isAllergic: checkAllergic
             })
           }
           this.recipeName = parseRecipe.COOKRCP01.row[0].RCP_NM
+          this.recipeWay = parseRecipe.COOKRCP01.row[0].RCP_WAY2
           for (const i in parseRecipe.COOKRCP01.row[0]) {
             if (i.includes('MANUAL0') || i.includes('MANUAL1')) {
               if (parseRecipe.COOKRCP01.row[0][i] !== '') {
@@ -249,6 +251,7 @@ export default {
         userUID: this.userUID,
         recipeName: this.recipeName,
         recipeInfo: this.recipeInfo,
+        recipeWay: this.recipeWay,
         recipeDescription: this.recipeDescription,
         recipeLikes: [],
         recipeImage: this.recipeImage,

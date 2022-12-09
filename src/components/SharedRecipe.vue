@@ -1,74 +1,108 @@
 <template>
-  <div class="container mt-4">
+  <div class="container mt-3">
     <div class="d-flex justify-content-between">
-      <div class="fs-4 fw-bold text-success text-start align-self-end">
+      <div class="fs-2 fw-bold text-success text-start align-self-end">
         공유 레시피
       </div>
-      <div class="align-bottom">
-        <div class="dropdown">
-          <button
-            id="dropdownMenuButton1"
-            aria-expanded="false"
-            class="btn btn-outline-success dropdown-toggle"
-            data-bs-toggle="dropdown"
-            type="button"
-          >
-            정렬
-          </button>
-          <ul
-            aria-labelledby="dropdownMenuButton1"
-            class="dropdown-menu"
-          >
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-              >최신순</a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                href="#"
-              >인기순</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <hr class="mt-2">
-    <!-- NOTE: 일단 카드 반응형인데 width 부분 auto로 하면 크기가 들쭉 날쭉 함 -->
-    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 text-start">
       <div
-        v-for="(recipe, index) in recipes"
-        :key="index"
+        class="vr"
+        style="width: 2px"
+      />
+    </div>
+    <ul
+      id="pills-tab"
+      class="nav nav-tabs mb-2 mt-3 border-0"
+      role="tablist"
+    >
+      <li
+        class="nav-item"
+        role="presentation"
       >
-        <div class="col mb-4">
-          <router-link
-            :to="`/recipe-detail/${recipe.id}`"
-            style="text-decoration: none; color: inherit"
+        <button
+          id="pills-home-tab"
+          aria-controls="pills-home"
+          aria-selected="true"
+          class="nav-link active fw-bold text-success"
+          data-bs-target="#pills-home"
+          data-bs-toggle="pill"
+          role="tab"
+          type="button"
+        >
+          최신순
+        </button>
+      </li>
+      <li
+        class="nav-item"
+        role="presentation"
+      >
+        <button
+          id="pills-profile-tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+          class="nav-link fw-bold text-success"
+          data-bs-target="#pills-profile"
+          data-bs-toggle="pill"
+          role="tab"
+          type="button"
+        >
+          인기순
+        </button>
+      </li>
+    </ul>
+    <div
+      id="pills-tabContent"
+      class="tab-content"
+    >
+      <div
+        id="pills-home"
+        aria-labelledby="pills-home-tab"
+        class="tab-pane fade show active"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 text-start">
+          <div
+            v-for="(recipe, index) in recipes"
+            :key="index"
           >
-            <div
-              class="card shadow-sm"
-              style="width: auto; height: 26rem;"
-            >
-              <img
-                :src="recipe.recipeImage"
-                class="card-img-top"
-                height="200"
+            <div class="col mb-4">
+              <router-link
+                :to="`/recipe-detail/${recipe.id}`"
+                style="text-decoration: none; color: inherit"
               >
-              <div class="card-body">
-                <h5 class="card-title">
-                  {{ recipe.recipeName }}
-                </h5>
-                <p class="card-text">
-                  {{ recipe.recipeDescription }}
-                </p>
-              </div>
-              <div class="card-footer text-muted fs-6">
-                {{ recipe.userEmail }}
-              </div>
+                <div
+                  class="card shadow border-0"
+                  style="width: auto; height: 26rem;"
+                >
+                  <img
+                    :src="recipe.recipeImage"
+                    class="card-img-top"
+                    height="200"
+                  >
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold">
+                      {{ recipe.recipeName }}
+                    </h5>
+                    <p class="card-text fw-semibold">
+                      {{ recipe.recipeDescription }}
+                    </p>
+                  </div>
+                  <div class="card-footer text-muted fs-6 bg-white">
+                    {{ recipe.userEmail }}
+                  </div>
+                </div>
+              </router-link>
             </div>
-          </router-link>
+          </div>
+        </div>
+        <div
+          id="pills-profile"
+          aria-labelledby="pills-profile-tab"
+          class="tab-pane fade"
+          role="tabpanel"
+          tabindex="0"
+        >
+          ...
         </div>
       </div>
     </div>

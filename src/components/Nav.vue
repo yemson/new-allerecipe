@@ -1,11 +1,11 @@
 <template>
   <div>
     <nav
-      class="navbar nav-dark bg-success"
+      class="navbar navbar-expand-lg navbar-light bg-light"
     >
       <div class="container">
         <router-link
-          class="navbar-brand fs-4 text-light"
+          class="navbar-brand fs-4 fw-bold text-success"
           to="/"
         >
           Allerecipe
@@ -15,10 +15,16 @@
         >
           <div v-if="user == null">
             <router-link
-              class="btn fw-bold text-light"
+              class="btn btn-outline-success border-0 rounded-1 fw-bold me-2"
               to="/login"
             >
               로그인
+            </router-link>
+            <router-link
+              class="btn btn-success rounded-1 fw-bold"
+              to="/register"
+            >
+              회원가입
             </router-link>
           </div>
           <div v-if="user !== null">
