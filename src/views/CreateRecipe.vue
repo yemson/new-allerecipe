@@ -255,7 +255,8 @@ export default {
         recipeDescription: this.recipeDescription,
         recipeLikes: [],
         recipeImage: this.recipeImage,
-        isPublic: this.isPublic
+        isPublic: this.isPublic,
+        likeCount: 0
       })
       console.log('Document written with ID: ', docRef.id)
       this.$toast.success('레시피를 생성했습니다!', {

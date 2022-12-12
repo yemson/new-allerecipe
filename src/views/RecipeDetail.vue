@@ -287,24 +287,6 @@ export default {
     },
     async createStepComment () {
       try {
-        // if (this.inputStepComment.length === 0) {
-        //   this.$toast.error('댓글을 작성해주세요!', {
-        //     position: 'top-center',
-        //     timeout: 3000
-        //   })
-        // } else {
-        //   const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), {
-        //     stepComment: this.inputStepComment,
-        //     createdAt: Date.now(),
-        //     userUID: this.userUID
-        //   })
-        //   console.log('Document written with ID: ', docRef.id)
-        //   this.inputStepComment = []
-        //   this.$toast.success('댓글을 작성했습니다!', {
-        //     position: 'top-center',
-        //     timeout: 3000
-        //   })
-        // }
         const docRef = await addDoc(collection(db, `recipe_post/${this.$route.params.id}/step_comments`), {
           comment: this.inputStepComment,
           createdAt: Date.now(),
@@ -368,7 +350,8 @@ export default {
         this.likeCount = recipeLikes.length
       }
       await updateDoc(doc(db, `recipe_post/${this.$route.params.id}`), {
-        recipeLikes
+        recipeLikes,
+        likeCount: this.likeCount
       })
     },
     async checkLike () {
@@ -403,7 +386,8 @@ export default {
         recipeDescription: this.recipeDetail.recipeDescription,
         recipeLikes: [],
         recipeImage: this.recipeDetail.recipeImage,
-        isPublic: false
+        isPublic: false,
+        likeCount: 0
       })
       console.log('Document written with ID: ', docRef.id)
       this.$toast.success('레시피를 스크랩했습니다!', {

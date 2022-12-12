@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import { db } from '@/main'
 
 export default {
@@ -115,15 +115,19 @@ export default {
   components: {},
   data () {
     return {
-      recipes: []
+      recipes: [],
+      popularityRecipes: []
     }
+  },
+  computed: {
+
   },
   mounted () {
     this.getSharedRecipe()
   },
   methods: {
     async getSharedRecipe () {
-      const q = query(collection(db, 'recipe_post'), where('isPublic', '==', true))
+      const q = query(collection(db, 'recipe_post'), where('isPublic', '==', true), orderBy('likeCount', 'desc'))
       onSnapshot(q, (snapshot) => {
         this.recipes = []
         snapshot.forEach((doc) => {
