@@ -256,7 +256,8 @@ export default {
         recipeLikes: [],
         recipeImage: this.recipeImage,
         isPublic: this.isPublic,
-        likeCount: 0
+        likeCount: 0,
+        created: new Date().getTime()
       })
       console.log('Document written with ID: ', docRef.id)
       this.$toast.success('레시피를 생성했습니다!', {
