@@ -81,7 +81,7 @@
                       <h5 class="card-title fw-bold">
                         {{ recipe.recipeName }}
                       </h5>
-                      <p class="card-text fw-semibold">
+                      <p class="card-text fw-500">
                         {{ recipe.recipeDescription }}
                       </p>
                     </div>
@@ -142,10 +142,14 @@
                   >
                   <div class="card-body d-flex flex-column justify-content-between">
                     <div>
-                      <h5 class="card-title fw-bold">
+                      <h5
+                        class="card-title fw-bold"
+                      >
                         {{ recipe.recipeName }}
                       </h5>
-                      <p class="card-text fw-semibold">
+                      <p
+                        class="card-text fw-500"
+                      >
                         {{ recipe.recipeDescription }}
                       </p>
                     </div>
@@ -234,5 +238,9 @@ export default {
 }
 .card {
   transition: transform 0.2s ease;
+}
+
+.fw-500 {
+  font-weight: 500;
 }
 </style>

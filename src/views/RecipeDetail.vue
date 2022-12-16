@@ -1,7 +1,10 @@
 <template>
   <div>
     <Nav />
-    <div class="container mt-4">
+    <div
+      class="container mt-4"
+      style="max-width: 50rem;"
+    >
       <div v-if="recipeDetail.forkUID">
         <div class="text-muted text-start">
           {{ recipeDetail.forkUID }} -> {{ recipeDetail.uid }}
@@ -48,7 +51,7 @@
           class="card shadow-sm my-3"
           data-bs-toggle="collapse"
         >
-          <div class="card-body fw-bold text-start">
+          <div class="card-body fw-500 text-start">
             {{ recipe }}
           </div>
         </div>
@@ -60,14 +63,21 @@
             v-for="(stepComment, stepIndex) in stepComments"
             :key="stepIndex"
           >
-            <div v-if="index === stepComment.comment.indexOf(stepComment.comment.at(-1))">
-              <div class="card mb-3">
-                <div class="card-header text-start">
-                  {{ stepComment.userEmail }}
-                </div>
-                <div class="card-body text-start fw-bold">
-                  {{ stepComment.comment.at(-1) }}
-                </div>
+            <div
+              v-if="index === stepComment.comment.indexOf(stepComment.comment.at(-1))"
+              class="px-2"
+            >
+              <div class="d-flex fw-bold mt-3 mb-1">
+                {{ stepComment.userEmail }}
+                <span
+                  class="ms-3 text-muted fw-500 align-self-end"
+                  style="font-size: 12px"
+                >
+                  약 2개월 전
+                </span>
+              </div>
+              <div class="d-flex text-muted mb-4">
+                {{ stepComment.comment.at(-1) }}
               </div>
             </div>
           </div>
@@ -80,10 +90,10 @@
             placeholder="이곳에 댓글을 작성하세요"
             style="height: 80px"
           />
-          <div class="d-grid gap-2 mt-3 mb-4">
+          <div class="d-flex justify-content-end mt-3 mb-4">
             <button
               :disabled="!canAccess"
-              class="btn btn-success"
+              class="btn btn-success fw-semibold"
               type="button"
               @click="createStepComment"
             >
@@ -92,9 +102,9 @@
           </div>
         </div>
       </div>
-      <div class="d-flex">
+      <div class="d-flex mt-4 mb-3">
         <div
-          class="flex-grow-1 text-start pt-1"
+          class="flex-grow-1 text-start pt-1 fw-bold fs-6"
           style="font-size: 0.8rem;"
         >
           작성자: {{ recipeDetail.userEmail }}
@@ -118,7 +128,7 @@
                 <div class="modal-header">
                   <h1
                     id="exampleModalLabel"
-                    class="modal-title fs-5"
+                    class="modal-title fs-5 fw-bold"
                   >
                     레시피 스크랩
                   </h1>
@@ -129,7 +139,7 @@
                     type="button"
                   />
                 </div>
-                <div class="modal-body">
+                <div class="modal-body fw-semibold">
                   {{ recipeDetail.recipeName }}을(를) 스크랩 하시겠습니까?
                 </div>
                 <div class="modal-footer">
@@ -168,32 +178,8 @@
           </div>
         </div>
       </div>
-      <hr class="mt-2">
-      <div class="col-4 text-start fs-4 fw-bold text-success">
-        댓글
-      </div>
-      <div v-if="comments.length === 0">
-        <p class="text-muted text-start mt-2">
-          댓글이 없습니다.
-        </p>
-      </div>
-      <div v-else>
-        <div
-          v-for="(comment, index) in comments"
-          :key="index"
-        >
-          <div class="card shadow-sm my-3">
-            <div class="card-header text-start">
-              {{ comment.userEmail }}
-            </div>
-            <div class="card-body fw-bold text-start">
-              {{ comment.comment }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="mt-2">
-      <div class="col-4 text-start fs-4 fw-bold text-success">
+      <hr class="mt-2 mb-3">
+      <div class="text-start fs-4 fw-bold text-success mb-2 mt-4">
         댓글 작성
       </div>
       <div class="form-floating mt-1">
@@ -207,15 +193,43 @@
         />
         <label for="commentArea">이곳에 댓글을 작성하세요</label>
       </div>
-      <div class="d-grid gap-2 mt-3 mb-4">
+      <div class="d-flex mt-3 mb-4 justify-content-end">
         <button
           :disabled="!canAccess"
-          class="btn btn-success"
+          class="btn btn-success fw-semibold"
           type="button"
           @click="createComment"
         >
           댓글 작성
         </button>
+      </div>
+      <div v-if="comments.length === 0">
+        <p class="text-muted text-start mt-2 fw-500 px-2 mb-5">
+          댓글이 없습니다.
+        </p>
+      </div>
+      <div
+        v-else
+        class="mb-5"
+      >
+        <div
+          v-for="(comment, index) in comments"
+          :key="index"
+          class="px-2"
+        >
+          <div class="d-flex fw-bold mt-3 mb-1">
+            {{ comment.userEmail }}
+            <span
+              class="ms-3 text-muted fw-500 align-self-end"
+              style="font-size: 12px"
+            >
+              약 2개월 전
+            </span>
+          </div>
+          <div class="d-flex text-muted mb-4">
+            {{ comment.comment }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -401,6 +415,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.fw-500 {
+  font-weight: 500;
+}
 </style>
