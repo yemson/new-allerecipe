@@ -5,42 +5,42 @@
       <!--      :to="`/recipe-detail/${recipe.id}`"-->
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/steaming"
+        to="/category-view/찌기"
         type="button"
       >
         찌기
       </router-link>
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/boiling"
+        to="/category-view/끓이기"
         type="button"
       >
         끓이기
       </router-link>
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/baking"
+        to="/category-view/굽기"
         type="button"
       >
         굽기
       </router-link>
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/frying"
+        to="/category-view/튀기기"
         type="button"
       >
         튀기기
       </router-link>
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/stir-frying"
+        to="/category-view/볶기"
         type="button"
       >
         볶기
       </router-link>
       <router-link
         class="btn fw-bold fs-5 text-success border-0 me-2 col"
-        to="/category-view/etc"
+        to="/category-view/기타"
         type="button"
       >
         기타
