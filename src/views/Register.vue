@@ -5,7 +5,7 @@
       <div class="col col-sm-2 col-md-2 col-lg-3 col-xl-4 col-xxl-4" />
       <div class="col-12 col-sm-8 col-md-8 col-lg-6 col-xl-4 col-xxl-4">
         <div
-          class="card shadow-sm"
+          class="card shadow border-0"
           style="height: 42em; margin: 4em auto 0;"
         >
           <div
@@ -221,8 +221,8 @@
 </template>
 
 <script>
-import { onAuthStateChanged, createUserWithEmailAndPassword } from 'firebase/auth'
-import { setDoc, doc } from 'firebase/firestore'
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '@/main'
 import Nav from '@/components/Nav.vue'
 

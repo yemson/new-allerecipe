@@ -48,7 +48,7 @@
           :aria-controls="'collapse' + index"
           :data-bs-target="`#collapse${index}`"
           aria-expanded="false"
-          class="card shadow-sm my-3"
+          class="card shadow border-0 my-3"
           data-bs-toggle="collapse"
         >
           <div class="card-body fw-500 text-start">

@@ -233,13 +233,6 @@ export default {
 </script>
 
 <style scoped>
-.card:hover {
-  transform: scale(1.1);
-}
-.card {
-  transition: transform 0.2s ease;
-}
-
 .fw-500 {
   font-weight: 500;
 }
