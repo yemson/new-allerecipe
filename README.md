@@ -1,4 +1,4 @@
-# bootstrap-allerecipe
+# 알러레시피는 알레르기 보유자들을 위한 알레르기 대체 레시피 공유 서비스입니다.
 
 ## Project setup
 ```
